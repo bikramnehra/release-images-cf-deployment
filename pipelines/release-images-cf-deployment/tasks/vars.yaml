@@ -1,0 +1,17 @@
+ci-repo: https://github.com/bikramnehra/release-images-ci
+ci-branch: master
+docker-image-resource-repo: https://github.com/concourse/docker-image-resource
+docker-image-resource-branch: master
+cf-deployment-repo: https://github.com/cloudfoundry/cf-deployment
+cf-deployment-branch: master
+cf-deployment-yaml: cf-deployment/cf-deployment.yml
+s3-bucket: cf-opensusefs2
+stemcell-os: opensuse
+stemcell-repository: splatform/fissile-stemcell-opensuse
+docker-organization: splatform
+dockerhub-username: 
+dockerhub-password: 
+versions-s3-bucket: fissile-stemcell-versions
+s3-accessKey: 
+s3-secretKey: 
+s3-bucket-region: 
