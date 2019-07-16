@@ -1,6 +1,6 @@
 fly --target provo set-pipeline \
       --pipeline="release-images-cf-deployment" \
       --config=<(erb "pipeline.yml") \
-      --load-vars-from="vars.yml"
+      --load-vars-from="myvars.yml"
 
 fly -t provo destroy-pipeline -p release-images-cf-deployment
