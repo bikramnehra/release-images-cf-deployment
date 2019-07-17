@@ -9,13 +9,15 @@ function build_release() {
   cf_version="${1}"
   docker_registry="${2}"
   docker_organization="${3}"
-  stemcell_os="${4}"
-  stemcell_version="${5}"
-  stemcell_image="${6}"
-  release_name="${7}"
-  release_url="${8}"
-  release_version="${9}"
-  release_sha1="${10}"
+  docker_username="${4}"
+  docker_password="${5}"
+  stemcell_os="${6}"
+  stemcell_version="${7}"
+  stemcell_image="${8}"
+  release_name="${9}"
+  release_url="${10}"
+  release_version="${11}"
+  release_sha1="${12}"
 
   stemcell_name="${stemcell_os}-${stemcell_version}"
 
@@ -42,12 +44,16 @@ function build_release() {
   built_image_tag=$(echo "${built_image_filter}" | awk '{ printf $2 }')
   built_image="${built_image_repository}:${built_image_tag}"
   echo -e "Built image: ${GREEN}${built_image}${NC}"
-  exit 1
-  if curl --head --fail "https://hub.docker.com/v2/repositories/${built_image_repository}/tags/${built_image_tag}/" 1> /dev/null 2> /dev/null; then
+  docker_creds_string=""
+  if [ -z "${docker_username}" && -z "${docker_password}"]; then
+      docker_creds_string="-u ${docker_username}:${docker_password}"
+  fi
+  if curl --silent ${docker_creds_string} https://${docker_registry}/v2/${docker_organization}/${built_image_repository}/manifests/${built_image_tag} | jq '.errors[0].code' | grep -q null && echo true || echo false; then
     echo "Skipping push for ${GREEN}${built_image}${NC} as it is already present in the registry..."
   else
     #docker push "${built_image}"
     echo "Mocking the docker Push..."
+    exit 1
   fi
   docker rmi "${built_image}"
 
