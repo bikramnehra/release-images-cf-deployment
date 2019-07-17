@@ -16,7 +16,7 @@ start_docker \
 trap 'stop_docker' EXIT
 
 # Login to the Docker registry.
-echo "${DOCKER_TEAM_PASSWORD_RW}" | docker login --username "${DOCKER_TEAM_USERNAME}" --password-stdin
+echo "${DOCKER_TEAM_PASSWORD_RW}" | docker login "${DOCKER_REGISTRY}" --username "${DOCKER_TEAM_USERNAME}" --password-stdin
 
 # Extract the fissile binary.
 tar xvf s3.fissile-linux/fissile-*.tgz --directory "/usr/local/bin/"
