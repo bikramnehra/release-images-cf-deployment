@@ -32,11 +32,9 @@ resources:
 - name: s3.fissile-stemcell-sle-version
   type: s3
   source:
-    bucket: ((versions-s3-bucket))
-    region_name: ((s3-bucket-region))
-    access_key_id: ((s3-accessKey))
-    secret_access_key: ((s3-secretKey))
-    versioned_file: ((versions-s3-file))
+    bucket: ((stemcell-versions-s3-bucket))
+    region_name: ((stemcell-s3-bucket-region))
+    versioned_file: ((stemcell-versions-file))
     
 jobs:
 <% cf_deployment_tags.each do |cf_deployment_tag| %>
@@ -59,7 +57,7 @@ jobs:
       params:
         STEMCELL_OS: ((stemcell-os))
         STEMCELL_REPOSITORY: ((stemcell-repository))
-        CF_DEPLOYMENT_YAML: ((cf-deployment-yaml))
+        STEMCELL_VERSIONED_FILE: ((stemcell-versions-file))
         DOCKER_REGISTRY: ((docker-registry))
         DOCKER_ORGANIZATION: ((docker-organization))
         DOCKER_TEAM_USERNAME: ((dockerhub-username))
