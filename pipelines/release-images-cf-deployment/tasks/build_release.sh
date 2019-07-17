@@ -45,15 +45,14 @@ function build_release() {
   built_image="${built_image_repository}:${built_image_tag}"
   echo -e "Built image: ${GREEN}${built_image}${NC}"
   docker_creds_string=""
-  if [ -z "${docker_username}" && -z "${docker_password}"]; then
+  if [ ! -z "${docker_username}" ] && [ ! -z "${docker_password}" ]; then
       docker_creds_string="-u ${docker_username}:${docker_password}"
   fi
-  if curl --silent ${docker_creds_string} https://${docker_registry}/v2/${docker_organization}/${built_image_repository}/manifests/${built_image_tag} | jq '.errors[0].code' | grep -q null && echo true || echo false; then
+  if curl --silent ${docker_creds_string} https://${docker_registry}/v2/${docker_organization}/${built_image_repository}/manifests/${built_image_tag} | jq '.errors[0].code' | grep -q null; then
     echo "Skipping push for ${GREEN}${built_image}${NC} as it is already present in the registry..."
   else
     #docker push "${built_image}"
     echo "Mocking the docker Push..."
-    exit 1
   fi
   docker rmi "${built_image}"
 
