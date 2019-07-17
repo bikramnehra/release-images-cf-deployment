@@ -34,6 +34,8 @@ resources:
   source:
     bucket: ((stemcell-versions-s3-bucket))
     region_name: ((stemcell-s3-bucket-region))
+    access_key_id: ((s3-accessKey))
+    secret_access_key: ((s3-secretKey))
     versioned_file: ((stemcell-versions-file))
     
 jobs:
